@@ -16,8 +16,7 @@
         <h1><%= heading %></h1>
         <nav class="nav">
           <% if (user) { %>
-            <span class="nav-user">hi, <%= user.name %></span>
-            <a href="/" class="nav-link">blogs</a>
+            <span>hi, <%= user.name %></span>
             <a href="/account" class="nav-link">account</a>
             <a href="/signout" class="nav-link">sign out</a>
           <% } else { %>

@@ -63,19 +63,17 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-  const { password } = req.body;
+  const { user_id, password, name } = req.body;
   try {
-    const user_id = req.body.user_id.trim();
-    const name = req.body.name.trim();
-    if (!user_id || !name) {
+    if (!user_id.trim() || !name.trim()) {
       return res.render('signup', { error: 'Please fill in your name and user ID' });
     }
-    const existing = await db.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
+    const existing = await db.query('SELECT * FROM users WHERE user_id = $1', [user_id.trim()]);
     if (existing.rows.length > 0) {
       return res.render('signup', { error: 'That user ID is already taken, try a different one' });
     }
     const hashed = await bcrypt.hash(password, 10);
-    await db.query('INSERT INTO users (user_id, password, name) VALUES ($1, $2, $3)', [user_id, hashed, name]);
+    await db.query('INSERT INTO users (user_id, password, name) VALUES ($1, $2, $3)', [user_id.trim(), hashed, name.trim()]);
     res.redirect('/signin');
   } catch (err) {
     console.log(err);
@@ -88,9 +86,9 @@ app.get('/signin', (req, res) => {
 });
 
 app.post('/signin', async (req, res) => {
-  const { password } = req.body;
+  const { user_id, password } = req.body;
   try {
-    const result = await db.query('SELECT * FROM users WHERE user_id = $1', [req.body.user_id.trim()]);
+    const result = await db.query('SELECT * FROM users WHERE user_id = $1', [user_id.trim()]);
     const found = result.rows[0];
     if (!found || !(await bcrypt.compare(password, found.password))) {
       return res.render('signin', { error: 'Wrong user ID or password' });
@@ -172,10 +170,10 @@ app.get('/account', requireLogin, (req, res) => {
 });
 
 app.post('/account', requireLogin, async (req, res) => {
-  const newPassword = req.body.password;
+  const { user_id, password: newPassword } = req.body;
   const oldId = req.session.user.id;
   try {
-    const newId = req.body.user_id.trim();
+    const newId = user_id.trim();
     if (!newId) {
       return res.render('account', { error: 'User ID can not be empty', success: null });
     }
