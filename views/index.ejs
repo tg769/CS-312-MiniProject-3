@@ -1,0 +1,60 @@
+<%- include('partials/header', { title: 'Blogs', heading: "Tanmay's Blog", tagline: 'my CS312 mini-project blog' }) %>
+    <section class="new-post">
+      <h2>write something</h2>
+      <form action="/posts" method="POST" class="post-form">
+        <div class="form-group">
+          <label for="title">title</label>
+          <input type="text" id="title" name="title" placeholder="what's this one about?" required>
+        </div>
+        <div class="form-group">
+          <label for="body">the actual post</label>
+          <textarea id="body" name="body" rows="5" placeholder="type your thoughts here..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">category</label>
+          <select id="category" name="category" required>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat %>"><%= cat %></option>
+            <% }) %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">publish</button>
+      </form>
+    </section>
+
+    <section class="post-list">
+      <h2>all posts</h2>
+
+      <div class="filter-bar">
+        <a href="/" class="filter-pill <%= activeCategory === '' ? 'active' : '' %>">all</a>
+        <% categories.forEach(cat => { %>
+          <a href="/?category=<%= cat %>" class="filter-pill <%= activeCategory === cat ? 'active' : '' %>"><%= cat %></a>
+        <% }) %>
+      </div>
+
+      <% if (posts.length === 0) { %>
+        <p class="empty-state">no posts yet</p>
+      <% } else { %>
+        <div class="board">
+          <% posts.forEach(post => { %>
+            <article class="post-card">
+              <div class="post-header">
+                <h3><%= post.title %></h3>
+                <span class="post-category"><%= post.category %></span>
+              </div>
+              <p class="post-content"><%= post.body %></p>
+              <span class="post-meta">// posted by <%= post.creator_name %> on <%= new Date(post.date_created).toLocaleString() %></span>
+              <% if (post.creator_user_id === user.id) { %>
+                <div class="post-actions">
+                  <a href="/posts/<%= post.blog_id %>/edit" class="btn btn-secondary">edit</a>
+                  <form action="/posts/<%= post.blog_id %>/delete" method="POST" class="inline-form">
+                    <button type="submit" class="btn btn-danger">delete</button>
+                  </form>
+                </div>
+              <% } %>
+            </article>
+          <% }) %>
+        </div>
+      <% } %>
+    </section>
+<%- include('partials/footer') %>

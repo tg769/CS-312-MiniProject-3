@@ -1,0 +1,17 @@
+{
+  "name": "cs312-blog-web-app",
+  "version": "1.0.0",
+  "description": "my CS312 blog project - Express + EJS + PostgreSQL with sign in",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^18.0.6",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.19.0",
+    "pg": "^8.23.1"
+  }
+}

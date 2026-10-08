@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Tanmay's Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Nunito:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-top">
+        <h1><%= heading %></h1>
+        <nav class="nav">
+          <% if (user) { %>
+            <span class="nav-user">hi, <%= user.name %></span>
+            <a href="/" class="nav-link">blogs</a>
+            <a href="/account" class="nav-link">account</a>
+            <a href="/signout" class="nav-link">sign out</a>
+          <% } else { %>
+            <a href="/signin" class="nav-link">sign in</a>
+            <a href="/signup" class="nav-link">sign up</a>
+          <% } %>
+        </nav>
+      </div>
+      <p class="tagline"><%= tagline %></p>
+    </div>
+  </header>
+
+  <main class="container">

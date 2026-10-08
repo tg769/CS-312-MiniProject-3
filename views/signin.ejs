@@ -1,0 +1,18 @@
+<%- include('partials/header', { title: 'Sign in', heading: 'sign in', tagline: 'sign in to see the blogs' }) %>
+    <section class="new-post">
+      <% if (error) { %>
+        <p class="message error"><%= error %></p>
+      <% } %>
+      <form action="/signin" method="POST" class="post-form">
+        <div class="form-group">
+          <label for="user_id">user id</label>
+          <input type="text" id="user_id" name="user_id" required>
+        </div>
+        <div class="form-group">
+          <label for="password">password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">sign in</button>
+      </form>
+    </section>
+<%- include('partials/footer') %>

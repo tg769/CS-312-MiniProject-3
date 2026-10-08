@@ -1,0 +1,26 @@
+<%- include('partials/header', { title: 'Editing', heading: 'editing a post', tagline: 'fix your typos before anyone notices' }) %>
+    <section class="new-post">
+      <form action="/posts/<%= post.blog_id %>/edit" method="POST" class="post-form">
+        <div class="form-group">
+          <label for="title">title</label>
+          <input type="text" id="title" name="title" value="<%= post.title %>" required>
+        </div>
+        <div class="form-group">
+          <label for="body">the actual post</label>
+          <textarea id="body" name="body" rows="5" required><%= post.body %></textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">category</label>
+          <select id="category" name="category" required>
+            <% categories.forEach(cat => { %>
+              <option value="<%= cat %>" <%= post.category === cat ? 'selected' : '' %>><%= cat %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">save changes</button>
+          <a href="/" class="btn btn-secondary">&larr; cancel</a>
+        </div>
+      </form>
+    </section>
+<%- include('partials/footer') %>

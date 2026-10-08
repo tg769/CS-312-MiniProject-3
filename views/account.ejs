@@ -1,0 +1,24 @@
+<%- include('partials/header', { title: 'Account', heading: 'my account', tagline: 'change your user id or password' }) %>
+    <section class="new-post">
+      <% if (error) { %>
+        <p class="message error"><%= error %></p>
+      <% } %>
+      <% if (success) { %>
+        <p class="message success"><%= success %></p>
+      <% } %>
+      <form action="/account" method="POST" class="post-form">
+        <div class="form-group">
+          <label for="user_id">user id</label>
+          <input type="text" id="user_id" name="user_id" value="<%= user.id %>" required>
+        </div>
+        <div class="form-group">
+          <label for="password">new password (leave empty to keep the old one)</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">save</button>
+          <a href="/" class="btn btn-secondary">&larr; back</a>
+        </div>
+      </form>
+    </section>
+<%- include('partials/footer') %>
